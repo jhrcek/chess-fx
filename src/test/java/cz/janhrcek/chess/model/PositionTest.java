@@ -1,6 +1,8 @@
 package cz.janhrcek.chess.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -31,5 +33,21 @@ public class PositionTest {
 
         assertEquals(null, posAfter.getPiece(Square.E2));
         assertEquals(Piece.WHITE_PAWN, posAfter.getPiece(Square.E4));
+    }
+
+    @Test
+    public void whiteToMoveInInitialPosition() {
+        Position pos = new PositionImpl();
+        assertTrue(pos.isWhiteToMove());
+    }
+
+    @Test
+    public void moveSwitchesPlayerToMove() {
+        Position pos = new PositionImpl();
+        pos = pos.move(new Move(Piece.WHITE_PAWN, Square.E2, Square.E4));
+        assertFalse(pos.isWhiteToMove());
+
+        pos = pos.move(new Move(Piece.BLACK_PAWN, Square.E7, Square.E5));
+        assertTrue(pos.isWhiteToMove());
     }
 }

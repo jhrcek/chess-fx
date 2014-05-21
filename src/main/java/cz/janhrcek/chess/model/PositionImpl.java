@@ -30,9 +30,11 @@ public class PositionImpl implements Position {
         WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     };
     private final Piece[] pieces;
+    private boolean isWhiteToMove;
 
     public PositionImpl() {
         pieces = INITIAL_PIECES.clone();
+        isWhiteToMove = true;
     }
 
     @Override
@@ -40,8 +42,13 @@ public class PositionImpl implements Position {
         return pieces[square.getIndex()];
     }
 
+    /**
+     * @param move the move to make
+     * @return new object representing position after move was made from this position
+     */
     @Override
     public Position move(Move move) {
+        //TODO - move logic to position factory
         final Square from = move.getFrom();
         if (getPiece(from) != move.getPiece()) {
             throw new IllegalArgumentException("Move " + move + " impossible - there is " + getPiece(from) + " on "
@@ -52,12 +59,13 @@ public class PositionImpl implements Position {
         System.arraycopy(pieces, 0, newPosition.pieces, 0, pieces.length);
         newPosition.pieces[from.getIndex()] = null;
         newPosition.pieces[move.getTo().getIndex()] = move.getPiece();
+        newPosition.isWhiteToMove = !isWhiteToMove;
         return newPosition;
     }
 
     @Override
     public boolean isWhiteToMove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return isWhiteToMove;
     }
 
     @Override
