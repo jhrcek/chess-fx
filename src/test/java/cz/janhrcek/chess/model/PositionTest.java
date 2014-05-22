@@ -38,4 +38,27 @@ public class PositionTest {
         pos = pos.move(new Move(Piece.BLACK_PAWN, Square.E7, Square.E5));
         assertTrue(pos.isWhiteToMove());
     }
+
+    @Test
+    public void toStringTest() {
+        String expected
+                = "┌───┬───┬───┬───┬───┬───┬───┬───┐\n"
+                + "│ r │ n │ b │ q │ k │ b │ n │ r │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│ p │ p │ p │ p │ p │ p │ p │ p │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│   │   │   │   │   │   │   │   │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│   │   │   │   │   │   │   │   │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│   │   │   │   │   │   │   │   │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│   │   │   │   │   │   │   │   │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│ P │ P │ P │ P │ P │ P │ P │ P │\n"
+                + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+                + "│ R │ N │ B │ Q │ K │ B │ N │ R │\n"
+                + "└───┴───┴───┴───┴───┴───┴───┴───┘\n";
+        assertEquals(expected, pf.initialPosition().toString());
+    }
 }
