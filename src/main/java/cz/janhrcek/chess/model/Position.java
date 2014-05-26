@@ -15,7 +15,13 @@ public interface Position {
 
     Square getEnPassantSquare();
 
-    boolean isCastlinAvailable(boolean isWhite, boolean isKingside);
+    boolean canCastleWK();
+
+    boolean canCastleWQ();
+
+    boolean canCastleBK();
+
+    boolean canCastleBQ();
 
     int getHalfMoveNumber();
 

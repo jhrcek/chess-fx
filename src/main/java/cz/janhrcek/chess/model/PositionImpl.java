@@ -12,10 +12,19 @@ public class PositionImpl implements Position {
     private final Piece[] board;
     private final boolean isWhiteToMove;
     private final PositionFactory positionFactory = new PositionFactoryImpl();
+    //Castling availabilities
+    private final boolean canWK;
+    private final boolean canWQ;
+    private final boolean canBK;
+    private final boolean canBQ;
 
-    PositionImpl(Piece[] board, boolean isWhiteToMove) {
+    PositionImpl(Piece[] board, boolean isWhiteToMove, boolean canWK, boolean canWQ, boolean canBK, boolean canBQ) {
         this.board = board;
         this.isWhiteToMove = isWhiteToMove;
+        this.canWK = canWK;
+        this.canWQ = canWQ;
+        this.canBK = canBK;
+        this.canBQ = canBQ;
     }
 
     @Override
@@ -39,11 +48,6 @@ public class PositionImpl implements Position {
 
     @Override
     public Square getEnPassantSquare() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isCastlinAvailable(boolean isWhite, boolean isKingside) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -84,5 +88,25 @@ public class PositionImpl implements Position {
     /* Package private implementation*/
     Piece[] getBoard() {
         return board;
+    }
+
+    @Override
+    public boolean canCastleWK() {
+        return canWK;
+    }
+
+    @Override
+    public boolean canCastleWQ() {
+        return canWQ;
+    }
+
+    @Override
+    public boolean canCastleBK() {
+        return canBK;
+    }
+
+    @Override
+    public boolean canCastleBQ() {
+        return canBQ;
     }
 }

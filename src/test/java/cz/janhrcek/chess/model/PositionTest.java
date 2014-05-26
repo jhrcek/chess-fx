@@ -40,6 +40,16 @@ public class PositionTest {
     }
 
     @Test
+    public void initialPosHasAllCastlingsAvailable() {
+        PositionFactory pf = new PositionFactoryImpl();
+        Position position = pf.initialPosition();
+        assertTrue(position.canCastleWK());
+        assertTrue(position.canCastleWQ());
+        assertTrue(position.canCastleWQ());
+        assertTrue(position.canCastleBQ());
+    }
+
+    @Test
     public void toStringTest() {
         String expected
                 = "┌───┬───┬───┬───┬───┬───┬───┬───┐\n"

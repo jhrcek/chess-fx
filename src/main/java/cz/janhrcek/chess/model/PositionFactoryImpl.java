@@ -33,7 +33,7 @@ public class PositionFactoryImpl implements PositionFactory {
 
     @Override
     public Position initialPosition() {
-        return new PositionImpl(INITIAL_PIECES.clone(), true);
+        return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true);
     }
 
     @Override
@@ -44,16 +44,26 @@ public class PositionFactoryImpl implements PositionFactory {
     @Override
     public Position fromPosition(Position pos, Move move) {
         Square from = move.getFrom();
-        if (pos.getPiece(from) != move.getPiece()) {
+        Piece piece = move.getPiece();
+        if (pos.getPiece(from) != piece) {
             throw new IllegalArgumentException("Move " + move + " impossible - there is " + pos.getPiece(from) + " on "
                     + from);
         }
-        //Copy board & make changes from move
+
+        //Copy board + make changes requested in move
         Piece[] newBoard = new Piece[SQUARES];
         System.arraycopy(((PositionImpl) pos).getBoard(), 0, newBoard, 0, SQUARES);
         newBoard[from.getIndex()] = null;
-        newBoard[move.getTo().getIndex()] = move.getPiece();
+        newBoard[move.getTo().getIndex()] = piece;
 
-        return new PositionImpl(newBoard, !pos.isWhiteToMove());
+        //Castling rights
+        boolean wk = pos.canCastleWK(), wq = pos.canCastleWQ(), bk = pos.canCastleBK(), bq = pos.canCastleBQ();
+        if (piece == Piece.WHITE_KING) { //Moving the king looses castling rights
+            wk = wq = false;
+        } else if (piece == Piece.BLACK_KING) {
+            bk = bq = false;
+        } //TODO: loose castling rights after rook moves
+
+        return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq);
     }
 }
