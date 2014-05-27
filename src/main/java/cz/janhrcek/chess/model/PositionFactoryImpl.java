@@ -37,11 +37,6 @@ public class PositionFactoryImpl implements PositionFactory {
     }
 
     @Override
-    public Position parseFen(String fen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Position fromPosition(Position pos, Move move) {
         Square from = move.getFrom();
         Piece piece = move.getPiece();
