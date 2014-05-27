@@ -14,9 +14,9 @@ public class Move {
     private final Square to;
 
     public Move(Piece piece, Square from, Square to) {
-        this.piece = Objects.requireNonNull(piece);
-        this.from = Objects.requireNonNull(from);
-        this.to = Objects.requireNonNull(to);
+        this.piece = Objects.requireNonNull(piece, "piece");
+        this.from = Objects.requireNonNull(from, "from");
+        this.to = Objects.requireNonNull(to, "to");
     }
 
     public Piece getPiece() {
