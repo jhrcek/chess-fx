@@ -34,4 +34,15 @@ public enum Square {
         return squares[index];
     }
 
+    public int getFileIndex() {
+        return ordinal() % 8;
+    }
+
+    public int getRankIndex() {
+        return ordinal() / 8;
+    }
+
+    public boolean isDark() {
+        return (getFileIndex() + getRankIndex()) % 2 == 1;
+    }
 }

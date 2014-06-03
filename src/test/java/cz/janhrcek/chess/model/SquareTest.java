@@ -20,4 +20,31 @@ public class SquareTest {
         Assert.assertEquals(Square.A1, Square.valueOf(56));
         Assert.assertEquals(Square.H1, Square.valueOf(63));
     }
+
+    @Test
+    public void fileIndexTest() {
+        Assert.assertEquals(0, Square.A8.getFileIndex());
+        Assert.assertEquals(0, Square.A1.getFileIndex());
+        Assert.assertEquals(4, Square.E5.getFileIndex());
+        Assert.assertEquals(7, Square.H2.getFileIndex());
+    }
+
+    @Test
+    public void rankIndexTest() {
+        Assert.assertEquals(0, Square.A8.getRankIndex());
+        Assert.assertEquals(7, Square.A1.getRankIndex());
+        Assert.assertEquals(3, Square.E5.getRankIndex());
+        Assert.assertEquals(6, Square.H2.getRankIndex());
+    }
+
+    @Test
+    public void isDarkTest() {
+        Assert.assertTrue(Square.A1.isDark());
+        Assert.assertTrue(Square.E3.isDark());
+        Assert.assertTrue(Square.H6.isDark());
+
+        Assert.assertFalse(Square.H1.isDark());
+        Assert.assertFalse(Square.E6.isDark());
+        Assert.assertFalse(Square.B3.isDark());
+    }
 }
