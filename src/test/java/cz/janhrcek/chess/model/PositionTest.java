@@ -13,7 +13,7 @@ public class PositionTest {
 
     @Test
     public void moveDoesntChangeOriginalPosition() {
-        Position posBefore = pf.initialPosition();
+        Position posBefore = pf.createInitialPosition();
         Move m = new Move(Piece.WHITE_PAWN, Square.E2, Square.E4);
         Position posAfter = posBefore.move(m);
 
@@ -26,19 +26,19 @@ public class PositionTest {
 
     @Test
     public void whiteToMoveInInitialPosition() {
-        Position pos = pf.initialPosition();
+        Position pos = pf.createInitialPosition();
         assertTrue(pos.isWhiteToMove());
     }
     
     @Test
     public void nullEnPassantSquareInInitialPosition() {
-        Position pos = pf.initialPosition();
+        Position pos = pf.createInitialPosition();
         Assert.assertNull(pos.getEnPassantSquare());
     }
 
     @Test
     public void moveSwitchesPlayerToMove() {
-        Position pos = pf.initialPosition();
+        Position pos = pf.createInitialPosition();
         pos = pos.move(new Move(Piece.WHITE_PAWN, Square.E2, Square.E4));
         assertFalse(pos.isWhiteToMove());
 
@@ -49,7 +49,7 @@ public class PositionTest {
     @Test
     public void initialPosHasAllCastlingsAvailable() {
         PositionFactory pf = new PositionFactoryImpl();
-        Position position = pf.initialPosition();
+        Position position = pf.createInitialPosition();
         assertTrue(position.canCastleWK());
         assertTrue(position.canCastleWQ());
         assertTrue(position.canCastleWQ());
@@ -76,6 +76,6 @@ public class PositionTest {
                 + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
                 + "│ R │ N │ B │ Q │ K │ B │ N │ R │\n"
                 + "└───┴───┴───┴───┴───┴───┴───┴───┘\n";
-        assertEquals(expected, pf.initialPosition().toString());
+        assertEquals(expected, pf.createInitialPosition().toString());
     }
 }

@@ -34,7 +34,7 @@ public class SimpleTextUi extends Application {
                 to = getSquare(event);
                 Move move = new Move(piece, from, to);
                 System.out.println("-> " + move);
-                currentPosition = positionFactory.fromPosition(currentPosition, move);
+                currentPosition = positionFactory.createPositionFrom(currentPosition, move);
                 boardArea.setText(currentPosition.toString());
                 from = to = null;
                 piece = null;
@@ -51,7 +51,7 @@ public class SimpleTextUi extends Application {
     }
 
     private Pane createContent() {
-        currentPosition = positionFactory.initialPosition();
+        currentPosition = positionFactory.createInitialPosition();
         boardArea = new TextArea(currentPosition.toString());
         boardArea.setPrefRowCount(19); // Minimum to prevent scrollbar from appearing
         boardArea.setPrefColumnCount(33);

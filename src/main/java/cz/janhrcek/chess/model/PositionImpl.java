@@ -40,7 +40,7 @@ public class PositionImpl implements Position {
      */
     @Override
     public Position move(Move move) {
-        return positionFactory.fromPosition(this, move);
+        return positionFactory.createPositionFrom(this, move);
     }
 
     @Override

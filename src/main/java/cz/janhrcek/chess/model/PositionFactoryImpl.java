@@ -29,15 +29,16 @@ public class PositionFactoryImpl implements PositionFactory {
         WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN,
         WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK
     };
+    private static final FenParser FEN_PARSER = new FenParserImpl();
     private static final int SQUARES = 64;
 
     @Override
-    public Position initialPosition() {
+    public Position createInitialPosition() {
         return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true, null);
     }
 
     @Override
-    public Position fromPosition(Position pos, Move move) {
+    public Position createPositionFrom(Position pos, Move move) {
         Square from = move.getFrom();
         Piece piece = move.getPiece();
         if (pos.getPiece(from) != piece) {
@@ -60,5 +61,10 @@ public class PositionFactoryImpl implements PositionFactory {
         } //TODO: loose castling rights after rook moves
 
         return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq, null);
+    }
+
+    @Override
+    public Position createPosition(String fen) {
+        return FEN_PARSER.parse(fen);
     }
 }

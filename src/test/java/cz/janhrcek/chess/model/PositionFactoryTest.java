@@ -11,7 +11,7 @@ public class PositionFactoryTest {
     @Test
     public void defaultCtorHasPiecesInInitialPosition() {
         PositionFactory pf = new PositionFactoryImpl();
-        Position position = pf.initialPosition();
+        Position position = pf.createInitialPosition();
         assertEquals(Piece.WHITE_PAWN, position.getPiece(Square.E2));
         assertEquals(Piece.WHITE_ROOK, position.getPiece(Square.A1));
         assertEquals(Piece.WHITE_QUEEN, position.getPiece(Square.D1));
@@ -26,7 +26,7 @@ public class PositionFactoryTest {
     @Test
     public void movingKingLoosesBothCastleRights() {
         PositionFactory pf = new PositionFactoryImpl();
-        Position pos0 = pf.initialPosition();
+        Position pos0 = pf.createInitialPosition();
 
         Position pos1 = pos0.move(new Move(Piece.WHITE_KING, Square.E1, Square.E2));
         assertFalse(pos1.canCastleWK());

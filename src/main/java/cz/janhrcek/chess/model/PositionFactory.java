@@ -6,7 +6,9 @@ package cz.janhrcek.chess.model;
  */
 public interface PositionFactory {
 
-    Position initialPosition();
+    Position createInitialPosition();
 
-    Position fromPosition(Position pos, Move move);
+    Position createPositionFrom(Position pos, Move move);
+    
+    Position createPosition(String fen);
 }

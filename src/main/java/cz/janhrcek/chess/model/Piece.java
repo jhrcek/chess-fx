@@ -1,5 +1,7 @@
 package cz.janhrcek.chess.model;
 
+import java.util.Random;
+
 /**
  *
  * @author jhrcek
@@ -19,6 +21,7 @@ public enum Piece {
     BLACK_QUEEN("q", "Q"),
     BLACK_KING("k", "K");
 
+    private static final Random RANDOM = new Random();
     private static final Piece[] PIECES = {
         WHITE_PAWN, WHITE_KNIGHT, WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, WHITE_KING,
         BLACK_PAWN, BLACK_KNIGHT, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, BLACK_KING
@@ -47,5 +50,9 @@ public enum Piece {
             throw new IllegalArgumentException("Invalid FEN letter: '" + fenLetter + "'");
         }
         return PIECES[pieceIndex];
+    }
+
+    public static Piece getRandomPiece() {
+        return values()[RANDOM.nextInt(values().length)];
     }
 }

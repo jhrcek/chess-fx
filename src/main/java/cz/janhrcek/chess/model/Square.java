@@ -43,6 +43,6 @@ public enum Square {
     }
 
     public boolean isDark() {
-        return (getFileIndex() + getRankIndex()) % 2 == 1;
+        return (getFileIndex() + getRankIndex()) % 2 != 0;
     }
 }
