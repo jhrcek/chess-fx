@@ -1,4 +1,4 @@
-package cz.janhrcek.chess.ui.textclient;
+package cz.janhrcek.chess.ui.client;
 
 import cz.janhrcek.chess.model.Move;
 import cz.janhrcek.chess.model.Piece;
