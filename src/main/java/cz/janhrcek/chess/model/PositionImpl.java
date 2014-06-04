@@ -17,14 +17,16 @@ public class PositionImpl implements Position {
     private final boolean canWQ;
     private final boolean canBK;
     private final boolean canBQ;
+    private final Square enPassantSquare;
 
-    PositionImpl(Piece[] board, boolean isWhiteToMove, boolean canWK, boolean canWQ, boolean canBK, boolean canBQ) {
+    PositionImpl(Piece[] board, boolean isWhiteToMove, boolean canWK, boolean canWQ, boolean canBK, boolean canBQ, Square enPassantSquare) {
         this.board = board;
         this.isWhiteToMove = isWhiteToMove;
         this.canWK = canWK;
         this.canWQ = canWQ;
         this.canBK = canBK;
         this.canBQ = canBQ;
+        this.enPassantSquare = enPassantSquare;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class PositionImpl implements Position {
 
     @Override
     public Square getEnPassantSquare() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return enPassantSquare;
     }
 
     @Override

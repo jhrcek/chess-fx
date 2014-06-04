@@ -15,7 +15,7 @@ public class FenParserImpl implements FenParser {
             System.out.println(i + ":" + matcher.group(i));
 
         }
-        return new PositionImpl(null, true, true, true, true, true);
+        return new PositionImpl(null, true, true, true, true, true, null);
     }
 
     @Override
@@ -50,6 +50,10 @@ public class FenParserImpl implements FenParser {
         return true;
     }
 
+    /**
+     * @param rank string representing 1 rank from the FEN string
+     * @return true, if rank "adds up to 8", i.e. if number of pieces in the rank + number of empty squares add up to 8
+     */
     private boolean isValidRank(String rank) {
         int count = 0;
         char letter;

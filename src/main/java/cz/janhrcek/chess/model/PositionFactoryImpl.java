@@ -33,7 +33,7 @@ public class PositionFactoryImpl implements PositionFactory {
 
     @Override
     public Position initialPosition() {
-        return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true);
+        return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true, null);
     }
 
     @Override
@@ -59,6 +59,6 @@ public class PositionFactoryImpl implements PositionFactory {
             bk = bq = false;
         } //TODO: loose castling rights after rook moves
 
-        return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq);
+        return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq, null);
     }
 }

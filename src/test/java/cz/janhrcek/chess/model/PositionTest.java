@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class PositionTest {
@@ -27,6 +28,12 @@ public class PositionTest {
     public void whiteToMoveInInitialPosition() {
         Position pos = pf.initialPosition();
         assertTrue(pos.isWhiteToMove());
+    }
+    
+    @Test
+    public void nullEnPassantSquareInInitialPosition() {
+        Position pos = pf.initialPosition();
+        Assert.assertNull(pos.getEnPassantSquare());
     }
 
     @Test
