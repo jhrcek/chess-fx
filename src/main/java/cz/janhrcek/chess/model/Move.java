@@ -35,4 +35,21 @@ public class Move {
     public String toString() {
         return piece.getSan() + (from + "-" + to).toLowerCase();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = piece.hashCode();
+        hash = 37 * hash + from.hashCode();
+        hash = 37 * hash + to.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Move other = (Move) obj;
+        return this.piece == other.piece && this.from == other.from && this.to == other.to;
+    }
 }
