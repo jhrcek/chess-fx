@@ -16,7 +16,7 @@ public class GameTest {
     };
 
     @Test
-    public void initialStateTest() {
+    public void initialPositionTest() {
         Game game = GameFactory.createGame();
         Position initPos = game.getCurrentPosition();
 
@@ -65,7 +65,13 @@ public class GameTest {
         Assert.assertTrue(position.isWhiteToMove());
     }
 
-    //@Test //TODO - use position diff to show that navigating from initial to initial does nothing
+    @Test
     public void navigatingFromInitialToInitialDoesNothing() {
+        Game game = GameFactory.createGame();
+        Position p1 = game.getCurrentPosition();
+        game.navigateTo().initialPosition();
+        Position p2 = game.getCurrentPosition();
+
+        Assert.assertTrue(p1.diffTo(p2).isEmpty());
     }
 }
