@@ -7,6 +7,14 @@ import org.junit.Test;
 
 public class GameTest {
 
+    private static final Move[] MOVES = { //First few moves of Ruy Lopez
+        new Move(Piece.WHITE_PAWN, Square.E2, Square.E4),
+        new Move(Piece.BLACK_PAWN, Square.E7, Square.E5),
+        new Move(Piece.WHITE_KNIGHT, Square.G1, Square.F3),
+        new Move(Piece.BLACK_KNIGHT, Square.B8, Square.C6),
+        new Move(Piece.WHITE_BISHOP, Square.F1, Square.B5)
+    };
+
     @Test
     public void initialStateTest() {
         Game game = GameFactory.createGame();
@@ -31,9 +39,9 @@ public class GameTest {
     @Test
     public void eachMoveCreatesNewHistoryId() throws IllegalMoveException {
         Game game = GameFactory.createGame();
-        int id1 = game.makeMove(new Move(Piece.WHITE_PAWN, Square.E2, Square.E4));
-        int id2 = game.makeMove(new Move(Piece.BLACK_PAWN, Square.E7, Square.E5));
-        int id3 = game.makeMove(new Move(Piece.WHITE_KNIGHT, Square.G1, Square.F3));
+        int id1 = game.makeMove(MOVES[0]);
+        int id2 = game.makeMove(MOVES[1]);
+        int id3 = game.makeMove(MOVES[2]);
 
         Set<Integer> set = new HashSet<>();
         set.add(id1);
@@ -41,5 +49,19 @@ public class GameTest {
         set.add(id3);
 
         Assert.assertEquals(3, set.size());
+    }
+
+    @Test
+    public void navigateToInitialPosition() throws IllegalMoveException {
+        Game game = GameFactory.createGame();
+        for (Move move : MOVES) {
+            game.makeMove(move);
+        }
+        game.navigateTo().initialPosition();
+        Position position = game.getCurrentPosition();
+
+        //Asert that navigation took us to initial position
+        Assert.assertEquals(Piece.WHITE_PAWN, position.getPiece(Square.E2));
+        Assert.assertTrue(position.isWhiteToMove());
     }
 }

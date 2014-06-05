@@ -35,7 +35,7 @@ public class GameImpl implements Game {
         return navigator;
     }
 
-    private class GameNavigatorImpl implements GameNavigator {
+    private static class GameNavigatorImpl implements GameNavigator {
 
         private final Map<Integer, HistoryNode> history = new HashMap<>();
         private HistoryNode currentNode;
@@ -44,8 +44,8 @@ public class GameImpl implements Game {
         private int addToHistory(Move moveLeadingToNewPosition, Position newPosition) {
             // When adding initial position, currentNode & moveLeadingToThisNode will be null (intended)
             currentNode = new HistoryNode(currentNode, moveLeadingToNewPosition, newPosition);
-            history.put(++nodeIdGenerator, currentNode);
-            return nodeIdGenerator - 1;
+            history.put(nodeIdGenerator, currentNode);
+            return nodeIdGenerator++;
         }
 
         @Override
