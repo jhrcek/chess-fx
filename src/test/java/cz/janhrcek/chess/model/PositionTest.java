@@ -9,11 +9,11 @@ import org.junit.Test;
 
 public class PositionTest {
 
-    private final PositionFactory pf = new PositionFactoryImpl();
+    private final PositionFactory factory = new PositionFactoryImpl();
 
     @Test
     public void moveDoesntChangeOriginalPosition() {
-        Position posBefore = pf.createInitialPosition();
+        Position posBefore = factory.createInitialPosition();
         Move m = new Move(Piece.WHITE_PAWN, Square.E2, Square.E4);
         Position posAfter = posBefore.move(m);
 
@@ -26,19 +26,19 @@ public class PositionTest {
 
     @Test
     public void whiteToMoveInInitialPosition() {
-        Position pos = pf.createInitialPosition();
+        Position pos = factory.createInitialPosition();
         assertTrue(pos.isWhiteToMove());
     }
-    
+
     @Test
     public void nullEnPassantSquareInInitialPosition() {
-        Position pos = pf.createInitialPosition();
+        Position pos = factory.createInitialPosition();
         Assert.assertNull(pos.getEnPassantSquare());
     }
 
     @Test
     public void moveSwitchesPlayerToMove() {
-        Position pos = pf.createInitialPosition();
+        Position pos = factory.createInitialPosition();
         pos = pos.move(new Move(Piece.WHITE_PAWN, Square.E2, Square.E4));
         assertFalse(pos.isWhiteToMove());
 
@@ -48,8 +48,7 @@ public class PositionTest {
 
     @Test
     public void initialPosHasAllCastlingsAvailable() {
-        PositionFactory pf = new PositionFactoryImpl();
-        Position position = pf.createInitialPosition();
+        Position position = factory.createInitialPosition();
         assertTrue(position.canCastleWK());
         assertTrue(position.canCastleWQ());
         assertTrue(position.canCastleWQ());
@@ -76,6 +75,13 @@ public class PositionTest {
                 + "├───┼───┼───┼───┼───┼───┼───┼───┤\n"
                 + "│ R │ N │ B │ Q │ K │ B │ N │ R │\n"
                 + "└───┴───┴───┴───┴───┴───┴───┴───┘\n";
-        assertEquals(expected, pf.createInitialPosition().toString());
+        assertEquals(expected, factory.createInitialPosition().toString());
+    }
+
+    @Test //TODO diffToTest
+    public void diffToTest() {
+        Position first = factory.createInitialPosition();
+        Position second = factory.createPosition("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2");
+        //List<Square> differences = first.diffTo(second);
     }
 }

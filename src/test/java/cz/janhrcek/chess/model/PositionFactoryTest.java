@@ -41,6 +41,6 @@ public class PositionFactoryTest {
 
     @Test
     public void movingRookLosesCastleRight() {
-        //TODO
+        //TODO test moving rook looses castling rights
     }
 }

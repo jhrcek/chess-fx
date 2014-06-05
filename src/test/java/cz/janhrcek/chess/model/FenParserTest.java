@@ -1,45 +1,46 @@
 package cz.janhrcek.chess.model;
 
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-@RunWith(Parameterized.class)
+import org.junit.Test;
+
 public class FenParserTest {
 
-    public FenParserTest(String fen, Boolean isValid) {
-        this.fen = fen;
-        this.isValid = isValid;
-    }
-
-    private final String fen;
-    private final Boolean isValid;
-
-    @Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-            {"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", true},
-            {"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", true},
-            {"rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2", true},
-            {"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", true},
-            //invalid
-            {"rnbqkbn/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", false},
-            {"rnbqkbnr/pp1pppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", false},
-            {"rnbqkbnr/pp1ppppp/7/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", false},
-            {"rnbqkbnr/pp1ppppp/8/2p5k/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", false},
-            {"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b Khq - 1 2", false},
-            {"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq a7 1 2", false},
-            {"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1", false},
-            {"rnbqkbnr/pp1ppppp/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", false}
-        });
-    }
-
     @Test
-    public void isValidTest() {
-        Assert.assertEquals(isValid, new FenParserImpl().isValidFen(fen));
+    public void parseInitialPositionFen() {
+        FenParser parser = new FenParserImpl();
+        Position position = parser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assertEquals(Piece.BLACK_ROOK, position.getPiece(Square.A8));
+        assertEquals(Piece.BLACK_KNIGHT, position.getPiece(Square.B8));
+        assertEquals(Piece.BLACK_BISHOP, position.getPiece(Square.C8));
+        assertEquals(Piece.BLACK_QUEEN, position.getPiece(Square.D8));
+        assertEquals(Piece.BLACK_KING, position.getPiece(Square.E8));
+        assertEquals(Piece.BLACK_PAWN, position.getPiece(Square.A7));
+        assertEquals(Piece.BLACK_PAWN, position.getPiece(Square.H7));
+
+        assertEquals(null, position.getPiece(Square.A6));
+        assertEquals(null, position.getPiece(Square.E4));
+        assertEquals(null, position.getPiece(Square.H3));
+
+        assertEquals(Piece.WHITE_ROOK, position.getPiece(Square.A1));
+        assertEquals(Piece.WHITE_KNIGHT, position.getPiece(Square.B1));
+        assertEquals(Piece.WHITE_BISHOP, position.getPiece(Square.C1));
+        assertEquals(Piece.WHITE_QUEEN, position.getPiece(Square.D1));
+        assertEquals(Piece.WHITE_KING, position.getPiece(Square.E1));
+        assertEquals(Piece.WHITE_PAWN, position.getPiece(Square.A2));
+        assertEquals(Piece.WHITE_PAWN, position.getPiece(Square.H2));
+
+        assertTrue(position.isWhiteToMove());
+
+        assertTrue(position.canCastleWK());
+        assertTrue(position.canCastleWQ());
+        assertTrue(position.canCastleBK());
+        assertTrue(position.canCastleBQ());
+
+        assertNull(position.getEnPassantSquare());
+        //TODO - check remaining parts of position
     }
 }

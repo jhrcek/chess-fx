@@ -44,7 +44,7 @@ public enum Piece {
         return san;
     }
 
-    public static Piece fromFen(String fenLetter) {
+    public static Piece fromFen(char fenLetter) {
         int pieceIndex = FEN_LETTERS.indexOf(fenLetter);
         if (pieceIndex < 0) {
             throw new IllegalArgumentException("Invalid FEN letter: '" + fenLetter + "'");

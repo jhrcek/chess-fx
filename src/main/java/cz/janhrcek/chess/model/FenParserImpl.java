@@ -10,12 +10,48 @@ public class FenParserImpl implements FenParser {
         if (!isValidFen(fen)) {
             throw new IllegalArgumentException("Invalid FEN : " + fen);
         }
-        Matcher matcher = VALID_FEN.matcher(fen);
-        for (int i = 0; i <= matcher.groupCount(); i++) {
-            System.out.println(i + ":" + matcher.group(i));
 
+        Matcher matcher = VALID_FEN.matcher(fen);
+        matcher.find();
+
+        // Pieces
+        Piece[] board = new Piece[64];
+        String[] ranks = matcher.group(1).split("/"); //We know it has 8 ranks, cause it passed isValidFen()
+        for (int rankIdx = 0; rankIdx < 8; rankIdx++) {
+            String rank = ranks[rankIdx];
+            int colIdx = 0;
+            for (int i = 0; i < rank.length(); i++) {
+                char letter = rank.charAt(i);
+                if (letter >= '1' && letter <= '8') {
+                    colIdx += letter - '0';
+                } else {
+                    board[8 * rankIdx + colIdx] = Piece.fromFen(letter);
+                    colIdx++;
+                }
+            }
         }
-        return new PositionImpl(null, true, true, true, true, true, null);
+
+        // Player to move
+        boolean isWhiteToMove = "w".equals(matcher.group(3));
+
+        // Castling availabilities
+        String castling = matcher.group(4);
+        boolean canWK = castling.indexOf('K') != -1;
+        boolean canWQ = castling.indexOf('Q') != -1;
+        boolean canBK = castling.indexOf('k') != -1;
+        boolean canBQ = castling.indexOf('q') != -1;
+
+        // En passant square
+        String enPassant = matcher.group(6);
+        Square enPassantSquare = enPassant.length() == 1 ? null : Square.valueOf(enPassant.toUpperCase());
+
+        //TODO : incorporate halfmove & fullmove into position
+        // Halfmove clock
+        int halfmove = Integer.parseInt(matcher.group(8));
+        // Fullmove number
+        int fullmove = Integer.parseInt(matcher.group(9));
+
+        return new PositionImpl(board, isWhiteToMove, canWK, canWQ, canBK, canBQ, enPassantSquare);
     }
 
     @Override

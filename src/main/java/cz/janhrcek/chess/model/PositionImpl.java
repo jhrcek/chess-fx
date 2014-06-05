@@ -13,13 +13,12 @@ public class PositionImpl implements Position {
     private final boolean isWhiteToMove;
     private final PositionFactory positionFactory = new PositionFactoryImpl();
     //Castling availabilities
-    private final boolean canWK;
-    private final boolean canWQ;
-    private final boolean canBK;
-    private final boolean canBQ;
+    private final boolean canWK, canWQ, canBK, canBQ;
     private final Square enPassantSquare;
 
-    PositionImpl(Piece[] board, boolean isWhiteToMove, boolean canWK, boolean canWQ, boolean canBK, boolean canBQ, Square enPassantSquare) {
+    PositionImpl(Piece[] board, boolean isWhiteToMove,
+            boolean canWK, boolean canWQ, boolean canBK, boolean canBQ,
+            Square enPassantSquare) {
         this.board = board;
         this.isWhiteToMove = isWhiteToMove;
         this.canWK = canWK;
