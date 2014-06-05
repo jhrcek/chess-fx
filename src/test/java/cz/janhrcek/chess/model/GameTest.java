@@ -64,4 +64,8 @@ public class GameTest {
         Assert.assertEquals(Piece.WHITE_PAWN, position.getPiece(Square.E2));
         Assert.assertTrue(position.isWhiteToMove());
     }
+
+    //@Test //TODO - use position diff to show that navigating from initial to initial does nothing
+    public void navigatingFromInitialToInitialDoesNothing() {
+    }
 }

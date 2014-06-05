@@ -55,7 +55,9 @@ public class GameImpl implements Game {
 
         @Override
         public void previousPosition() {
-            currentNode = currentNode.getParent();
+            if (currentNode.getParent() != null) {
+                currentNode = currentNode.getParent();
+            }
         }
 
         @Override
