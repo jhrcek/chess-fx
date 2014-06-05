@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -78,10 +80,14 @@ public class PositionTest {
         assertEquals(expected, factory.createInitialPosition().toString());
     }
 
-    @Test //TODO diffToTest
+    @Test
     public void diffToTest() {
         Position first = factory.createInitialPosition();
         Position second = factory.createPosition("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2");
-        //List<Square> differences = first.diffTo(second);
+        List<Square> differences = first.diffTo(second);
+
+        assertTrue(differences.size() == 6);
+        assertTrue(differences.containsAll(
+                Arrays.asList(Square.E2, Square.E4, Square.C7, Square.C5, Square.G1, Square.F3)));
     }
 }

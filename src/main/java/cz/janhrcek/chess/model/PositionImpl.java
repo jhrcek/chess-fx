@@ -1,7 +1,11 @@
 package cz.janhrcek.chess.model;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Stream;
 
 /**
  *
@@ -15,6 +19,7 @@ public class PositionImpl implements Position {
     //Castling availabilities
     private final boolean canWK, canWQ, canBK, canBQ;
     private final Square enPassantSquare;
+    //TODO add halfmove clock & fullmove number
 
     PositionImpl(Piece[] board, boolean isWhiteToMove,
             boolean canWK, boolean canWQ, boolean canBK, boolean canBQ,
@@ -109,5 +114,12 @@ public class PositionImpl implements Position {
     @Override
     public boolean canCastleBQ() {
         return canBQ;
+    }
+
+    @Override
+    public List<Square> diffTo(Position other) {
+        return Stream.of(Square.values())
+                .filter(square -> getPiece(square) != other.getPiece(square))
+                .collect(toList());
     }
 }

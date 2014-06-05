@@ -1,5 +1,7 @@
 package cz.janhrcek.chess.model;
 
+import java.util.List;
+
 /**
  * Represents state of a chess game.
  *
@@ -26,4 +28,10 @@ public interface Position {
     int getHalfMoveNumber();
 
     int getFullMoveNumber();
+
+    /**
+     * @param other
+     * @return list of squares that differ (have different or no piece on it) between this and other position
+     */
+    public List<Square> diffTo(Position other);
 }
