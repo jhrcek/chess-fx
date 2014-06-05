@@ -10,7 +10,7 @@ public class GameTest {
     @Test
     public void initialStateTest() {
         Game game = GameFactory.createGame();
-        Position initPos = game.getInitialPosition();
+        Position initPos = game.getCurrentPosition();
 
         Assert.assertEquals(Piece.WHITE_KING, initPos.getPiece(Square.E1));
         Assert.assertTrue(initPos.isWhiteToMove());
@@ -23,6 +23,7 @@ public class GameTest {
         Move move = new Move(Piece.WHITE_PAWN, Square.E2, Square.E4);
         game.makeMove(move);
         Position curPos = game.getCurrentPosition();
+
         Assert.assertEquals(Piece.WHITE_PAWN, curPos.getPiece(Square.E4));
         Assert.assertFalse(curPos.isWhiteToMove());
     }
@@ -38,7 +39,7 @@ public class GameTest {
         set.add(id1);
         set.add(id2);
         set.add(id3);
-        System.out.println(set);
+
         Assert.assertEquals(3, set.size());
     }
 }

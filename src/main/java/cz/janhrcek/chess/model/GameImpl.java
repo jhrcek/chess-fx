@@ -10,62 +10,80 @@ import java.util.Map;
 public class GameImpl implements Game {
 
     private final PositionFactory positionFactory;
-    private final Map<Integer, HistoryNode> history = new HashMap<>();
-    private int nodeIdGenerator = 0;
-    private final HistoryNode initialNode;
-    private HistoryNode currentNode;
+    private final GameNavigatorImpl navigator = new GameNavigatorImpl();
 
     public GameImpl(PositionFactory positionFactory) {
         this.positionFactory = positionFactory;
-        Position initialPosition = positionFactory.createInitialPosition();
-        initialNode = new HistoryNode(null, null, initialPosition);
-        currentNode = initialNode;
-        history.put(nodeIdGenerator, initialNode);
-    }
-
-    @Override
-    public Position getInitialPosition() {
-        return initialNode.getPosition();
+        Position initialPos = positionFactory.createInitialPosition();
+        navigator.addToHistory(null, initialPos);
     }
 
     @Override
     public Position getCurrentPosition() {
-        return currentNode.getPosition();
-    }
-
-    @Override
-    public void focusPreviousPosition() {
-        currentNode = currentNode.getPrevious();
-    }
-
-    @Override
-    public Position getPosition(int id) {
-        return history.get(id).getPosition();
+        return navigator.currentNode.getPosition();
     }
 
     @Override
     public int makeMove(Move move) throws IllegalMoveException {
         Position curPos = getCurrentPosition();
         Position newPos = positionFactory.createPositionFrom(curPos, move);
-        currentNode = new HistoryNode(currentNode, move, newPos);
-        history.put(++nodeIdGenerator, currentNode);
-        return nodeIdGenerator;
+        return navigator.addToHistory(move, newPos);
+    }
+
+    @Override
+    public GameNavigator navigateTo() {
+        return navigator;
+    }
+
+    private class GameNavigatorImpl implements GameNavigator {
+
+        private final Map<Integer, HistoryNode> history = new HashMap<>();
+        private HistoryNode currentNode;
+        private int nodeIdGenerator = 0;
+
+        private int addToHistory(Move moveLeadingToNewPosition, Position newPosition) {
+            // When adding initial position, currentNode & moveLeadingToThisNode will be null (intended)
+            currentNode = new HistoryNode(currentNode, moveLeadingToNewPosition, newPosition);
+            history.put(++nodeIdGenerator, currentNode);
+            return nodeIdGenerator - 1;
+        }
+
+        @Override
+        public void initialPosition() {
+            currentNode = history.get(0);
+        }
+
+        @Override
+        public void previousPosition() {
+            currentNode = currentNode.getParent();
+        }
+
+        @Override
+        public void positionAfter(Move m) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void positionWithId(int id) {
+            currentNode = history.get(id);
+        }
     }
 
     private static class HistoryNode {
 
-        private final HistoryNode previous;
+        private final HistoryNode parent;
+        private final Map<Move, HistoryNode> children = new HashMap<>();
         private final Position position;
         private final Move moveLeadingToThis;
 
-        public HistoryNode(HistoryNode previous, Move moveLeadingToThis, Position position) {
-            this.previous = previous;
+        public HistoryNode(HistoryNode parent, Move moveLeadingToThis, Position position) {
+            this.parent = parent;
             this.position = position;
             this.moveLeadingToThis = moveLeadingToThis;
         }
 
-        public HistoryNode getPrevious() {
-            return previous;
+        public HistoryNode getParent() {
+            return parent;
         }
 
         public Position getPosition() {

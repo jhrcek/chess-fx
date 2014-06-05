@@ -16,7 +16,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class SquarePicture extends StackPane {
 
-    private final Square square;
+    private final Square square; //TODO - use css style to color the background of square. For that we need empty transparent piece image.
     private final double size;
     private final Rectangle background;
     private Piece piece;

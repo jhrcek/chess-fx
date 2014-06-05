@@ -6,13 +6,9 @@ package cz.janhrcek.chess.model;
  */
 public interface Game {
 
-    Position getInitialPosition();
+    GameNavigator navigateTo();
 
     Position getCurrentPosition();
-
-    Position getPosition(int id);
-
-    void focusPreviousPosition();
 
     public int makeMove(Move move) throws IllegalMoveException;
 }
