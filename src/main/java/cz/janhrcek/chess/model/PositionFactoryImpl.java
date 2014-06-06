@@ -34,7 +34,7 @@ public class PositionFactoryImpl implements PositionFactory {
 
     @Override
     public Position createInitialPosition() {
-        return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true, null);
+        return new PositionImpl(INITIAL_PIECES.clone(), true, true, true, true, true, null, 0, 1);
     }
 
     @Override
@@ -60,7 +60,19 @@ public class PositionFactoryImpl implements PositionFactory {
             bk = bq = false;
         } //TODO: loose castling rights after rook moves
 
-        return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq, null);
+        //Halfmove clock (resets to 0 each time the move is capture or a pawn move, otherwise increments by 1)
+        int halfmove = isCaptureOrPawnAdvance(pos, move) ? 0 : pos.getHalfMoveClock() + 1;
+
+        //Fulmove number (incremented by 1 after each black's move)
+        int fullmove = pos.getFullMoveNumber() + (pos.isWhiteToMove() ? 0 : 1);
+
+        return new PositionImpl(newBoard, !pos.isWhiteToMove(), wk, wq, bk, bq, null, halfmove, fullmove);
+    }
+
+    private boolean isCaptureOrPawnAdvance(Position pos, Move move) {
+        return pos.getPiece(move.getTo()) != null //if there's a piece on the target square
+                || move.getPiece() == Piece.WHITE_PAWN
+                || move.getPiece() == Piece.BLACK_PAWN;
     }
 
     @Override

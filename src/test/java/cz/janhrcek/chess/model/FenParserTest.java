@@ -41,6 +41,8 @@ public class FenParserTest {
         assertTrue(position.canCastleBQ());
 
         assertNull(position.getEnPassantSquare());
-        //TODO - check remaining parts of position
+
+        assertEquals(0, position.getHalfMoveClock());
+        assertEquals(1, position.getFullMoveNumber());
     }
 }

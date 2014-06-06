@@ -45,13 +45,13 @@ public class FenParserImpl implements FenParser {
         String enPassant = matcher.group(6);
         Square enPassantSquare = enPassant.length() == 1 ? null : Square.valueOf(enPassant.toUpperCase());
 
-        //TODO : incorporate halfmove & fullmove into position
         // Halfmove clock
         int halfmove = Integer.parseInt(matcher.group(8));
+
         // Fullmove number
         int fullmove = Integer.parseInt(matcher.group(9));
 
-        return new PositionImpl(board, isWhiteToMove, canWK, canWQ, canBK, canBQ, enPassantSquare);
+        return new PositionImpl(board, isWhiteToMove, canWK, canWQ, canBK, canBQ, enPassantSquare, halfmove, fullmove);
     }
 
     @Override

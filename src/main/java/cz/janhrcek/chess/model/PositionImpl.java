@@ -19,11 +19,12 @@ public class PositionImpl implements Position {
     //Castling availabilities
     private final boolean canWK, canWQ, canBK, canBQ;
     private final Square enPassantSquare;
-    //TODO add halfmove clock & fullmove number
+    private final int halfmoveClock;
+    private final int fullmoveNumber;
 
     PositionImpl(Piece[] board, boolean isWhiteToMove,
             boolean canWK, boolean canWQ, boolean canBK, boolean canBQ,
-            Square enPassantSquare) {
+            Square enPassantSquare, int halfmoveClock, int fullmoveNumber) {
         this.board = board;
         this.isWhiteToMove = isWhiteToMove;
         this.canWK = canWK;
@@ -31,6 +32,8 @@ public class PositionImpl implements Position {
         this.canBK = canBK;
         this.canBQ = canBQ;
         this.enPassantSquare = enPassantSquare;
+        this.halfmoveClock = halfmoveClock;
+        this.fullmoveNumber = fullmoveNumber;
     }
 
     @Override
@@ -58,13 +61,13 @@ public class PositionImpl implements Position {
     }
 
     @Override
-    public int getHalfMoveNumber() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int getHalfMoveClock() {
+        return halfmoveClock;
     }
 
     @Override
     public int getFullMoveNumber() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return fullmoveNumber;
     }
 
     @Override

@@ -25,7 +25,7 @@ public interface Position {
 
     boolean canCastleBQ();
 
-    int getHalfMoveNumber();
+    int getHalfMoveClock();
 
     int getFullMoveNumber();
 
