@@ -53,6 +53,10 @@ public enum Square {
         return isDark;
     }
 
+    public int getIndex() {
+        return ordinal();
+    }
+
     /* Package private implementation */
     static Square valueOf(int index) {
         return SQUARES[index];
@@ -60,10 +64,6 @@ public enum Square {
 
     long getBitBoard() {
         return bitboard;
-    }
-
-    int getIndex() {
-        return ordinal();
     }
 
     static Set<Square> toSquareSet(long bitboard) {
