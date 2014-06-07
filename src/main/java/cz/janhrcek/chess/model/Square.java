@@ -18,7 +18,12 @@ public enum Square {
     A2, B2, C2, D2, E2, F2, G2, H2,
     A1, B1, C1, D1, E1, F1, G1, H1;
 
-    private static final Square[] squares = {
+    private final long bitboard; // Bitboard with exacly one '1' in the place correcponding to this square
+    private final int fileIndex; // 0-based indes of file (A has 0, B has 1, ..., H has 7)
+    private final int rankIndex; // 0-based indes of rank (8th has 0, 7th has 1, ..., 1st has 7)
+    private final boolean isDark;
+
+    private static final Square[] SQUARES = {
         A8, B8, C8, D8, E8, F8, G8, H8,
         A7, B7, C7, D7, E7, F7, G7, H7,
         A6, B6, C6, D6, E6, F6, G6, H6,
@@ -29,32 +34,43 @@ public enum Square {
         A1, B1, C1, D1, E1, F1, G1, H1
     };
 
+    private Square() {
+        bitboard = 1L << (63 - ordinal());
+        fileIndex = ordinal() % 8;
+        rankIndex = ordinal() / 8;
+        isDark = (fileIndex + rankIndex) % 2 != 0;
+    }
+
+    public int getFileIndex() {
+        return fileIndex;
+    }
+
+    public int getRankIndex() {
+        return rankIndex;
+    }
+
+    public boolean isDark() {
+        return isDark;
+    }
+
+    /* Package private implementation */
+    static Square valueOf(int index) {
+        return SQUARES[index];
+    }
+
+    long getBitBoard() {
+        return bitboard;
+    }
+
     int getIndex() {
         return ordinal();
     }
 
-    static Square valueOf(int index) {
-        return squares[index];
-    }
-
-    public int getFileIndex() {
-        return ordinal() % 8;
-    }
-
-    public int getRankIndex() {
-        return ordinal() / 8;
-    }
-
-    public boolean isDark() {
-        return (getFileIndex() + getRankIndex()) % 2 != 0;
-    }
-
     static Set<Square> toSquareSet(long bitboard) {
         Set<Square> result = EnumSet.noneOf(Square.class);
-        for (int i = 0; i < 64; i++) {//Add square corresponding to each 1 bit in the input bitboard
-            long bitMask = 1L << (63 - i);
-            if ((bitboard & bitMask) != 0) {
-                result.add(squares[i]);
+        for (Square sq : Square.values()) {
+            if ((bitboard & sq.getBitBoard()) != 0) { //Add square if bitboard has 1 bit in place corresponding to that square
+                result.add(sq);
             }
         }
         return result;

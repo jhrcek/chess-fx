@@ -1,6 +1,7 @@
 package cz.janhrcek.chess.model;
 
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -58,6 +59,17 @@ public enum Piece {
     }
 
     public boolean canGo(Square from, Square to) {
+        lazyInitCanGoBitboards();
+        long canGoBB = canGoBitBoards[from.getIndex()];
+        return (canGoBB & to.getBitBoard()) != 0;
+    }
+
+    public Set<Square> whereCanGoFrom(Square from) {
+        lazyInitCanGoBitboards();
+        return Square.toSquareSet(canGoBitBoards[from.getIndex()]);
+    }
+
+    private void lazyInitCanGoBitboards() {
         // TODO get rid of lazy initialization.  As it is now it can however not be placed into piece constructor,
         // because then we would have an initialization cycle (Piece constructor needs to call 
         // BitBoards.generateBitboard, which swichtes on Piece, which is not yet initialized
@@ -67,9 +79,5 @@ public enum Piece {
                 canGoBitBoards[square.getIndex()] = BitBoards.generateCanGoBitboard(this, square);
             }
         }
-
-        long canGoBB = canGoBitBoards[from.getIndex()];
-        long toBB = 1L << (63 - to.getIndex());
-        return (canGoBB & toBB) != 0;
     }
 }
