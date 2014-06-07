@@ -1,6 +1,8 @@
 package cz.janhrcek.chess.model;
 
 import java.math.BigInteger;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * BitBoard is a 64-bit vector (represented as java long) capable of representing yes/no predicate about each of the 64
@@ -141,7 +143,7 @@ class BitBoards {
         return result.toString();
     }
 
-    static long toLong(String str) {
+    private static long toLong(String str) {
         assert64Chars(str);
         long result = 0L;
         for (int i = 0; i < str.length(); i++) {

@@ -1,5 +1,8 @@
 package cz.janhrcek.chess.model;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 /**
  *
  * @author jhrcek
@@ -44,5 +47,16 @@ public enum Square {
 
     public boolean isDark() {
         return (getFileIndex() + getRankIndex()) % 2 != 0;
+    }
+
+    static Set<Square> toSquareSet(long bitboard) {
+        Set<Square> result = EnumSet.noneOf(Square.class);
+        for (int i = 0; i < 64; i++) {//Add square corresponding to each 1 bit in the input bitboard
+            long bitMask = 1L << (63 - i);
+            if ((bitboard & bitMask) != 0) {
+                result.add(squares[i]);
+            }
+        }
+        return result;
     }
 }

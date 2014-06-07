@@ -9,9 +9,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class BitBoardGeneratorTest {
+public class BitBoardTest {
 
-    public BitBoardGeneratorTest(Piece piece, Square from, long expected) {
+    public BitBoardTest(Piece piece, Square from, long expected) {
         this.piece = piece;
         this.from = from;
         this.expected = expected;
