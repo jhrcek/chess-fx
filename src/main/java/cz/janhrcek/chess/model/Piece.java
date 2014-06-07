@@ -30,6 +30,7 @@ public enum Piece {
 
     private final String fen; // Shortcut for piece name used in Forsythe-Edwards notation
     private final String san; // Shortcut for piece name used in Short Algebraic notation
+    private long[] canGoBitBoards;
 
     private Piece(String fenLetter, String sanLetter) {
         this.fen = fenLetter;
@@ -54,5 +55,21 @@ public enum Piece {
 
     public static Piece getRandomPiece() {
         return values()[RANDOM.nextInt(values().length)];
+    }
+
+    public boolean canGo(Square from, Square to) {
+        // TODO get rid of lazy initialization.  As it is now it can however not be placed into piece constructor,
+        // because then we would have an initialization cycle (Piece constructor needs to call 
+        // BitBoards.generateBitboard, which swichtes on Piece, which is not yet initialized
+        if (canGoBitBoards == null) {
+            canGoBitBoards = new long[Square.values().length];
+            for (Square square : Square.values()) {
+                canGoBitBoards[square.getIndex()] = BitBoards.generateCanGoBitboard(this, square);
+            }
+        }
+
+        long canGoBB = canGoBitBoards[from.getIndex()];
+        long toBB = 1L << (63 - to.getIndex());
+        return (canGoBB & toBB) != 0;
     }
 }
