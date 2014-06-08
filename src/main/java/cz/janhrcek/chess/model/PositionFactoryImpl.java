@@ -54,11 +54,25 @@ public class PositionFactoryImpl implements PositionFactory {
 
         //Castling rights
         boolean wk = pos.canCastleWK(), wq = pos.canCastleWQ(), bk = pos.canCastleBK(), bq = pos.canCastleBQ();
-        if (piece == Piece.WHITE_KING) { //Moving the king looses castling rights
+        if (piece == WHITE_KING) { //Moving the king looses both castling rights
             wk = wq = false;
-        } else if (piece == Piece.BLACK_KING) {
+        } else if (piece == BLACK_KING) {
             bk = bq = false;
-        } //TODO: loose castling rights after rook moves
+        } else if (piece == WHITE_ROOK) { //Moving the rook looses castling rights on side corresponding to rook
+            if (from == Square.A1) {
+                wq = false;
+            }
+            if (from == Square.H1) {
+                wk = false;
+            }
+        } else if (piece == BLACK_ROOK) {
+            if (from == Square.A8) {
+                bq = false;
+            }
+            if (from == Square.H8) {
+                bk = false;
+            }
+        }
 
         //Halfmove clock (resets to 0 each time the move is capture or a pawn move, otherwise increments by 1)
         int halfmove = isCaptureOrPawnAdvance(pos, move) ? 0 : pos.getHalfMoveClock() + 1;
@@ -71,8 +85,8 @@ public class PositionFactoryImpl implements PositionFactory {
 
     private boolean isCaptureOrPawnAdvance(Position pos, Move move) {
         return pos.getPiece(move.getTo()) != null //if there's a piece on the target square
-                || move.getPiece() == Piece.WHITE_PAWN
-                || move.getPiece() == Piece.BLACK_PAWN;
+                || move.getPiece() == WHITE_PAWN
+                || move.getPiece() == BLACK_PAWN;
     }
 
     @Override

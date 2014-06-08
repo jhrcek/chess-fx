@@ -10,5 +10,5 @@ public interface Game {
 
     Position getCurrentPosition();
 
-    public int makeMove(Move move) throws IllegalMoveException;
+    int makeMove(Move move) throws IllegalMoveException;
 }

@@ -33,5 +33,5 @@ public interface Position {
      * @param other
      * @return list of squares that differ (have different or no piece on it) between this and other position
      */
-    public List<Square> diffTo(Position other);
+    List<Square> diffTo(Position other);
 }

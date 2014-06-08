@@ -41,6 +41,29 @@ public class PositionFactoryTest {
 
     @Test
     public void movingRookLosesCastleRight() {
-        //TODO test moving rook looses castling rights
+        PositionFactory pf = new PositionFactoryImpl();
+        //Position with justs rooks and kings with all the castling rights
+        Position pos = pf.createPosition("r111k11r/8/8/8/8/8/8/R111K11R w KQkq - 0 1");
+        assertTrue(pos.canCastleWK() && pos.canCastleWQ() && pos.canCastleBK() && pos.canCastleBQ());
+
+        //Moving A1 Rook looses only WQ castling right
+        Position p1 = pos.move(new Move(Piece.WHITE_ROOK, Square.A1, Square.A2));
+        assertTrue(p1.canCastleWK() && p1.canCastleBK() && p1.canCastleBQ());
+        assertFalse(p1.canCastleWQ());
+
+        //Moving H1 Rook looses only WK castling right
+        Position p2 = pos.move(new Move(Piece.WHITE_ROOK, Square.H1, Square.H8));
+        assertTrue(p2.canCastleWQ() && p2.canCastleBK() && p2.canCastleBQ());
+        assertFalse(p2.canCastleWK());
+
+        //Moving H8 Rook looses only BK castling right
+        Position p3 = pos.move(new Move(Piece.BLACK_ROOK, Square.H8, Square.G8));
+        assertTrue(p3.canCastleWK() && p3.canCastleWQ() && p3.canCastleBQ());
+        assertFalse(p3.canCastleBK());
+
+        //Moving H8 Rook looses only BQ castling right
+        Position p4 = pos.move(new Move(Piece.BLACK_ROOK, Square.A8, Square.A5));
+        assertTrue(p4.canCastleWK() && p4.canCastleWQ() && p4.canCastleBK());
+        assertFalse(p4.canCastleBQ());
     }
 }
