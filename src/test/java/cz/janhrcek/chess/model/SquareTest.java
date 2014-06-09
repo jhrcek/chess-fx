@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Set;
 import org.junit.Test;
 
@@ -60,20 +59,21 @@ public class SquareTest {
     public void toSquareSetTest() {
         long bbRepresentingA8 = 0b10000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000L;
         Set<Square> a8Set = Square.toSquareSet(bbRepresentingA8);
-        assertEquals(1, a8Set.size());
-        assertTrue(a8Set.contains(A8));
+        assertThat(a8Set)
+                .contains(A8)
+                .hasSize(1);
 
         long bbRepresentingAFile = 0b10000000_10000000_10000000_10000000_10000000_10000000_10000000_10000000L;
         Set<Square> aFileSet = Square.toSquareSet(bbRepresentingAFile);
-        assertEquals(8, aFileSet.size());
-        assertTrue(aFileSet.containsAll(
-                Arrays.asList(A1, A2, A3, A4, A5, A6, A7, A8)));
+        assertThat(aFileSet)
+                .contains(A1, A2, A3, A4, A5, A6, A7, A8)
+                .hasSize(8);
 
         long bbRepresenting3rdRank = 0b00000000_00000000_00000000_00000000_00000000_11111111_00000000_00000000L;
         Set<Square> thirdRankSet = Square.toSquareSet(bbRepresenting3rdRank);
-        assertEquals(8, thirdRankSet.size());
-        assertTrue(thirdRankSet.containsAll(
-                Arrays.asList(A3, B3, C3, D3, E3, F3, G3, H3))); //TODO - migrate to assertJ
+        assertThat(thirdRankSet)
+                .contains(A3, B3, C3, D3, E3, F3, G3, H3)
+                .hasSize(8);
     }
 
     @Test
