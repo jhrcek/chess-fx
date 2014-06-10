@@ -78,10 +78,49 @@ public class SquareTest {
 
     @Test
     public void squareIterationTest() {
-        assertThat(A1.squaresTo(NORTH))
-                .contains(A2, A3, A4, A5, A6, A7, A8)
-                .hasSize(7);
+        assertThat(A1.squaresTo(NORTH)).containsSequence(A2, A3, A4, A5, A6, A7, A8).hasSize(7);
+        assertThat(A1.squaresTo(NORTH_EAST)).containsSequence(B2, C3, D4, E5, F6, G7, H8).hasSize(7);
+        assertThat(A1.squaresTo(EAST)).containsSequence(B1, C1, D1, E1, F1, G1, H1).hasSize(7);
+        assertThat(A1.squaresTo(SOUTH_EAST)).isEmpty();
+        assertThat(A1.squaresTo(SOUTH)).isEmpty();
+        assertThat(A1.squaresTo(SOUTH_WEST)).isEmpty();
+        assertThat(A1.squaresTo(WEST)).isEmpty();
+        assertThat(A1.squaresTo(NORTH_WEST)).isEmpty();
 
-        //TODO - more tests for square iteration
+        assertThat(A8.squaresTo(NORTH)).isEmpty();
+        assertThat(A8.squaresTo(NORTH_EAST)).isEmpty();
+        assertThat(A8.squaresTo(EAST)).containsSequence(B8, C8, D8, E8, F8, G8, H8).hasSize(7);
+        assertThat(A8.squaresTo(SOUTH_EAST)).containsSequence(B7, C6, D5, E4, F3, G2, H1).hasSize(7);
+        assertThat(A8.squaresTo(SOUTH)).containsSequence(A7, A6, A5, A4, A3, A2, A1).hasSize(7);
+        assertThat(A8.squaresTo(SOUTH_WEST)).isEmpty();
+        assertThat(A8.squaresTo(WEST)).isEmpty();
+        assertThat(A8.squaresTo(NORTH_WEST)).isEmpty();
+
+        assertThat(E5.squaresTo(NORTH)).containsSequence(E6, E7, E8).hasSize(3);
+        assertThat(E5.squaresTo(NORTH_EAST)).containsSequence(F6, G7, H8).hasSize(3);
+        assertThat(E5.squaresTo(EAST)).containsSequence(F5, G5, H5).hasSize(3);
+        assertThat(E5.squaresTo(SOUTH_EAST)).containsSequence(F4, G3, H2).hasSize(3);
+        assertThat(E5.squaresTo(SOUTH)).containsSequence(E4, E3, E2, E1).hasSize(4);
+        assertThat(E5.squaresTo(SOUTH_WEST)).containsSequence(D4, C3, B2, A1).hasSize(4);
+        assertThat(E5.squaresTo(WEST)).containsSequence(D5, C5, B5, A5).hasSize(4);
+        assertThat(E5.squaresTo(NORTH_WEST)).containsSequence(D6, C7, B8).hasSize(3);
+
+        assertThat(H8.squaresTo(NORTH)).isEmpty();
+        assertThat(H8.squaresTo(NORTH_EAST)).isEmpty();
+        assertThat(H8.squaresTo(EAST)).isEmpty();
+        assertThat(H8.squaresTo(SOUTH_EAST)).isEmpty();
+        assertThat(H8.squaresTo(SOUTH)).containsSequence(H7, H6, H5, H4, H3, H2, H1).hasSize(7);
+        assertThat(H8.squaresTo(SOUTH_WEST)).containsSequence(G7, F6, E5, D4, C3, B2, A1).hasSize(7);
+        assertThat(H8.squaresTo(WEST)).containsSequence(G8, F8, E8, D8, C8, B8, A8).hasSize(7);
+        assertThat(H8.squaresTo(NORTH_WEST)).isEmpty();
+
+        assertThat(H1.squaresTo(NORTH)).containsSequence(H2, H3, H4, H5, H6, H7, H8).hasSize(7);
+        assertThat(H1.squaresTo(NORTH_EAST)).isEmpty();
+        assertThat(H1.squaresTo(EAST)).isEmpty();
+        assertThat(H1.squaresTo(SOUTH_EAST)).isEmpty();
+        assertThat(H1.squaresTo(SOUTH)).isEmpty();
+        assertThat(H1.squaresTo(SOUTH_WEST)).isEmpty();
+        assertThat(H1.squaresTo(WEST)).containsSequence(G1, F1, E1, D1, C1, B1, A1).hasSize(7);
+        assertThat(H1.squaresTo(NORTH_WEST)).containsSequence(G2, F3, E4, D5, C6, B7, A8).hasSize(7);
     }
 }
